@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Andrew's Chatting Website</title>
+<link type="text/css" rel="stylesheet" href="style.css" />
+</head>
+ 
+<div id="wrapper" style="height: 550px;">
+    <div id="menu">
+        <form name="login">
+        <p class="welcome">
+            Welcome,<input type="text" name="userid" placeholder="input username...">
+            <input type="button" onclick="check(this.form)" value="Login">
+            <p class="logout"><a id="exit" href="#">Exit Chat</a></p>
+        </p>
+    </form>
+    </div>
+     
+    <div id="chatbox"></div>
+     
+    <form name="message" action="" class="textarea">
+        <input name="usermsg" type="text" id="usermsg" size="63" placeholder="Type the message..." />
+        <input name="submitmsg" type="submit"  id="submitmsg" value="Send" style="height: 35px;" />
+    </form>
+</div>
+<!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
+<script type="text/javascript">
+// jQuery Document
+$(document).ready(function(){
+ 
+});
+</script>
+-->
+
+<script language="javascript">
+    function check(form)/*function to check userid & password*/
+    {
+     /*the following code checkes whether the entered userid and password are matching*/
+     if(form.userid.value == "Andrew")
+      {
+        window.open('target.html')/*opens the target page while Id & password matches*/
+      }
+     else
+     {
+       alert("Error Username")/*displays error message*/
+      }
+    }
+    </script>
+</body>
+</html>
