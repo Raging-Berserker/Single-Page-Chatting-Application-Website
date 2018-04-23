@@ -1,0 +1,108 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Andrew's Chatting Website</title>
+<link type="text/css" rel="stylesheet" href="style.css" />
+</head>
+ 
+<div id="wrapper" style="height: 550px;">
+    <div id="menu">
+        <form name="login">
+            <div id="formDiv">
+                <p class="welcome">
+                    <input type="text" name="userName" id="userName" placeholder="Enter Username">
+                    <input type="button" id="loginBtn" value="Login">
+                </p>
+            </div>
+            <p class="logout"><a style="display: none" id="exit" href="#">Exit Chat</a></p>
+            <div class="error" id = "error-container"></div>
+        </form>
+    </div>
+     
+    <div id="message-container"></div>
+
+    <div class="textarea" id="messageDiv" style="display: none;">
+        <input name="message" type="text" id="message" size="63" placeholder="Type the message..." />
+        <input name="submitmsg" type="button" id="submitmsg" value="Send" style="height: 35px;" />
+    </div>
+</div>
+
+<script src="js/jquery.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script language="javascript">
+    $(function () {
+        const socket = io();
+        let user = '';
+        const msg =  $('#error-container');
+
+        $(document.body).on('click', '#loginBtn', function () {
+            // console.log($('#userName').val());
+            if ($.trim($('#userName').val()) !== '') {
+                socket.emit('setUsername', $('#userName').val());
+            } else {
+                msg.removeClass('success');
+                msg.addClass('error');
+                $('#error-container').html('Username is required');
+            }
+        });
+
+        $(document.body).on('click', '#exit', function () {
+            $('#formDiv').css('display', 'block');
+            $('#exit').css('display', 'none');
+            $('#error-container').html('Login to begin chat');
+            $('#messageDiv').css('display', 'none');
+            $('#message-container').html('');
+        });
+
+        socket.on('userExists', function(data) {
+            msg.removeClass('success');
+            msg.addClass('error');
+            $('#error-container').html(data);
+            $('#userName').val('');
+        });
+
+        socket.on('userSet', function(data) {
+            user = data.username;
+            msg.html('Welcome, ' + user + ': type your messages below');
+            $('#userName').val('');
+            msg.removeClass('error');
+            msg.addClass('success');
+            $('#formDiv').css('display', 'none');
+            $('#exit').css('display', 'block');
+            $('#messageDiv').css('display', 'block');
+        });
+
+        $(document.body).on('click', '#submitmsg', function () {
+            if ($.trim($('#message').val()) !== '') {
+                socket.emit('msg', {message: $('#message').val(), user: user});
+            } else {
+                msg.removeClass('success');
+                msg.addClass('error');
+                $('#error-container').html('Message is required');
+            }
+        });
+
+        $(document.body).on('keypress', '#message', function (e) {
+            if (e.keyCode == 13) {
+                if ($.trim($('#message').val()) !== '') {
+                    socket.emit('msg', {message: $('#message').val(), user: user});
+                } else {
+                    msg.removeClass('success');
+                    msg.addClass('error');
+                    $('#error-container').html('Message is required');
+                }
+                return false; // prevent the button click from happening
+            }
+        });
+
+        socket.on('newmsg', function(data) {
+            if(user) {
+                let msg = $('#message-container').html();
+                $('#message-container').html(msg + '<div><b>' + data.user + '</b>: ' + data.message + '</div>');
+                $('#message').val('');
+            }
+        })
+    });
+</script>
+</body>
+</html>

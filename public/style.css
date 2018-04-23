@@ -1,0 +1,81 @@
+body {
+    font:15px arial;
+    /*color: #222;
+    background-repeat: no-repeat;*/
+    text-align:center;
+    position: fixed;
+    padding:35px;
+    background: url("background.jpg");
+    background-size:1250px;
+}
+  
+.loginbutton {
+    position: fixed;
+    top: 57px;
+    left: 335px;
+    height: 23px;
+}
+
+.textarea {
+    position: fixed;
+    top: 570px;
+    left: 60px;
+}
+
+form, p, span {
+    margin:0;
+    padding:0; }
+  
+input {
+    font:15px arial;
+}
+  
+a {
+    color:#0000FF;
+    text-decoration:none; }
+  
+    a:hover { text-decoration:underline; }
+  
+#wrapper, #loginform {
+    padding-bottom:25px;
+    background:#EBF4FB;
+    width:1100px;
+    border:1px solid #ACD8F0; }
+  
+#loginform { padding-top:18px; }
+  
+    #loginform p { margin: 5px; }
+  
+#message-container {
+    padding: 10px;
+    background: #fff;
+    height: 450px;
+    border: 1px solid #ACD8F0;
+    overflow: auto;
+    position: fixed;
+    top: 90px;
+    left: 60px;
+    width: 1050px;
+}
+  
+#message {
+    width:1000px;
+    border:1px solid #ACD8F0;
+    height: 30px;
+}
+  
+#submit {
+    width: 60px;
+}
+  
+.error { color: #ff0000; }
+
+.success { color: green; }
+
+#menu { padding:12.5px 25px 12.5px 25px; }
+  
+.welcome { float:left; }
+  
+.logout { float:right; }
+  
+.msgln { margin:0 0 2px 0; }
