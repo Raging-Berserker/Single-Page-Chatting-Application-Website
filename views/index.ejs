@@ -29,6 +29,7 @@
 
 <script src="js/jquery.min.js"></script>
 <script src="/socket.io/socket.io.js"></script>
+<script src="js/moment.js"></script>
 <script language="javascript">
     $(function () {
         const socket = io();
@@ -47,6 +48,8 @@
         });
 
         $(document.body).on('click', '#exit', function () {
+            socket.emit('unSetUser', user);
+
             $('#formDiv').css('display', 'block');
             $('#exit').css('display', 'none');
             $('#error-container').html('Login to begin chat');
@@ -98,7 +101,8 @@
         socket.on('newmsg', function(data) {
             if(user) {
                 let msg = $('#message-container').html();
-                $('#message-container').html(msg + '<div><b>' + data.user + '</b>: ' + data.message + '</div>');
+                let time = moment().format('lll');
+                $('#message-container').html(msg + '<div><b>' + data.user + '</b>: ' + data.message + ' @ ' + '<small>' + time + '</small></div>');
                 $('#message').val('');
             }
         })
